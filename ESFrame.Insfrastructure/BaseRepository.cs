@@ -11,28 +11,28 @@ public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<
     where TSnapshot : class, IEntitySnapshot<TKey>
 {
     private readonly IDomainEventRepository _domainEventRepository;
-    private readonly ISnapshotRepository _snapshotRepostory;
+    private readonly ISnapshotRepository _snapshotRepository;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
 
     protected BaseRepository(IDomainEventDispatcher domainEventDispatcher,
-        ISnapshotRepository snapshotRepostory,
+        ISnapshotRepository snapshotRepository,
         IDomainEventRepository domainEventRepository)
     {
         _domainEventDispatcher = domainEventDispatcher;
-        _snapshotRepostory = snapshotRepostory;
+        _snapshotRepository = snapshotRepository;
         _domainEventRepository = domainEventRepository;
     }
 
     public async Task<TAggregate?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var snapshot = await _snapshotRepostory.GetAsync<TAggregate, TSnapshot, TKey>(id, cancellationToken);
+        var snapshot = await _snapshotRepository.GetAsync<TAggregate, TSnapshot, TKey>(id, cancellationToken);
 
         var domainEvents = await _domainEventRepository.GetDomainEventsByAggregateId<TAggregate, TKey>(
             id, 
             snapshot?.TimeStamp, 
             cancellationToken);
 
-        if (snapshot is null && domainEvents is null)
+        if (snapshot is null && domainEvents.Count == 0)
         {
             return null;
         }

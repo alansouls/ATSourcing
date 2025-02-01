@@ -3,7 +3,7 @@ using FluentResults;
 
 namespace ESFrame.Domain;
 
-public abstract class BaseAggregateRoot<TKey> : IAggregateRoot<TKey> where TKey : IEquatable<TKey>
+public abstract class BaseAggregateRoot<TSnapshot, TKey> : IAggregateRoot<TKey> where TKey : IEquatable<TKey>
 {
     private readonly List<IDomainEvent<TKey>> _domainEvents = [];
 
@@ -11,12 +11,11 @@ public abstract class BaseAggregateRoot<TKey> : IAggregateRoot<TKey> where TKey 
 
     public IReadOnlyList<IDomainEvent<TKey>> DomainEvents => _domainEvents;
 
-    protected BaseAggregateRoot(IDomainEvent<TKey> createEvent)
+    protected BaseAggregateRoot()
     {
-        _domainEvents.Add(createEvent);
     }
 
-    protected BaseAggregateRoot(IEnumerable<IDomainEvent<TKey>> domainEvents, IEntitySnapshot<TKey>? snapshot)
+    protected BaseAggregateRoot(IEnumerable<IDomainEvent<TKey>> domainEvents, TSnapshot? snapshot)
     {
         if (snapshot is not null)
         {
@@ -52,7 +51,7 @@ public abstract class BaseAggregateRoot<TKey> : IAggregateRoot<TKey> where TKey 
 
     protected abstract Result ApplyEventEffect(IDomainEvent<TKey> domainEvent);
 
-    protected abstract void RestoreSnapshot(IEntitySnapshot<TKey> snapshot);
+    protected abstract void RestoreSnapshot(TSnapshot snapshot);
 
     public void ClearDomainEvents()
     {

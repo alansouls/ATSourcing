@@ -9,6 +9,8 @@ public abstract class BaseAggregateRoot<TSnapshot, TKey> : IAggregateRoot<TKey> 
 
     public TKey? Id { get; protected set; }
 
+    public bool IsDeleted { get; protected set; } = false;
+
     public IReadOnlyList<IDomainEvent<TKey>> DomainEvents => _domainEvents;
 
     protected BaseAggregateRoot()

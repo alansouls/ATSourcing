@@ -2,20 +2,21 @@ using ESFrame.Domain.Interfaces;
 
 namespace ATSourcing.Domain.Candidates.Events;
 
-public class CandidateUpdatedEvent : IDomainEvent<Guid, Dictionary<string, string>>
+public record CandidateUpdatedEventData(string FieldName, string NewValue);
+
+public class CandidateUpdatedEvent : IDomainEvent<Guid, CandidateUpdatedEventData>
 {
     public CandidateUpdatedEvent(Guid candidateId,
-        Dictionary<string, string> updatedData,
+        CandidateUpdatedEventData data,
         DateTimeOffset timeStamp)
     {
         AggregateId = candidateId;
-        Data = updatedData;
+        Data = data;
         TimeStamp = timeStamp;
     }
 
     public DateTimeOffset TimeStamp { get; }
     public string Name => nameof(CandidateUpdatedEvent);
     public Guid AggregateId { get; }
-    public Dictionary<string, string> Data { get; }
-    object IDomainEvent<Guid>.Data => Data;
+    public CandidateUpdatedEventData Data { get; }
 }

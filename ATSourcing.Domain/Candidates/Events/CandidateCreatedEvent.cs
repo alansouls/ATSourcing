@@ -6,18 +6,15 @@ public record CandidateCreatedEventData(string FirstName, string LastName, int A
 
 public class CandidateCreatedEvent : IDomainEvent<Guid, CandidateCreatedEventData>
 {
-    private readonly Candidate _candidate;
-    
-    public CandidateCreatedEvent(Candidate candidate, CandidateCreatedEventData data, DateTimeOffset createdDate)
+    public CandidateCreatedEvent(Guid candidateId, CandidateCreatedEventData data, DateTimeOffset createdDate)
     {
-        _candidate = candidate;
+        AggregateId = candidateId;
         Data = data;
         TimeStamp = createdDate;
     }
+    
     public DateTimeOffset TimeStamp { get; }
     public string Name => nameof(CandidateCreatedEvent);
-    public Guid AggregateId => _candidate.Id;
-    
-    object IDomainEvent<Guid>.Data => Data;
+    public Guid AggregateId { get; }
     public CandidateCreatedEventData Data { get; }
 }

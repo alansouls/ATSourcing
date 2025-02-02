@@ -1,5 +1,8 @@
+using ATSourcing.Application.Candidates.Requests.Commands;
+using ATSourcing.Application.Extensions;
 using ATSourcing.Infrastructure.Extensions;
 using ESFrame.Infrastructure.CosmosDB.Extensions;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +12,11 @@ builder.Services.AddOpenApi();
 
 builder.AddServiceDefaults();
 
-builder.Services.AddInfrastructure();
-
 builder.AddCosmosInfrastructure("cosmos-db");
+
+builder.Services.AddApplication();
+
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
@@ -22,5 +27,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapPost("candidates", async (IMediator mediator, CancellationToken cancellationToken) =>
+{
+    var result = await mediator.Send(new CreateCandidateCommand("John", "Doe", 25, "alan.maia@email.com", Guid.NewGuid()),
+        cancellationToken);
+
+    if (result.IsFailed)
+    {
+        return Results.BadRequest();
+    }
+
+    return Results.Ok();
+});
 
 app.Run();

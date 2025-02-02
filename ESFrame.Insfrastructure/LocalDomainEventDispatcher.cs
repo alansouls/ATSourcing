@@ -1,4 +1,5 @@
-﻿using ESFrame.Application;
+﻿using System.Reflection;
+using ESFrame.Application;
 using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
 using MediatR;
@@ -16,7 +17,10 @@ public class LocalDomainEventDispatcher : IDomainEventDispatcher
 
     public Task DispatchAsync<TDomainEvent>(TDomainEvent domainEvent, CancellationToken cancellationToken) where TDomainEvent : IDomainEvent
     {
-        var notification = new ApplicationNotification<TDomainEvent>(domainEvent);
+        var notificationType = typeof(ApplicationNotification<>).MakeGenericType(domainEvent.GetType());
+
+        var notification = Activator.CreateInstance(notificationType,
+            args: [domainEvent])!;
 
         return _publisher.Publish(notification, cancellationToken);
     }

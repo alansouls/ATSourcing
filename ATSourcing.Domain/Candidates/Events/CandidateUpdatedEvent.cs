@@ -14,4 +14,6 @@ public class CandidateUpdatedEvent : DomainEvent<Guid, CandidateUpdatedEventData
         Data = data;
         TimeStamp = timeStamp;
     }
+    
+    public override string Name => nameof(CandidateUpdatedEvent);
 }

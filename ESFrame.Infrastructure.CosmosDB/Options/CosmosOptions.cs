@@ -2,9 +2,7 @@
 
 public class CosmosOptions
 {
-    public string OptionsName => "CosmosDB";
+    public const string OptionsName = "CosmosDB";
 
-    public required string DatabaseId { get; set; }
-
-    public required string ConnectionString { get; set; }
+    public string DatabaseId { get; set; } = string.Empty;
 }

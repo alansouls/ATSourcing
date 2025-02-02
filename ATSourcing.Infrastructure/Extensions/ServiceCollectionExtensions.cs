@@ -1,6 +1,7 @@
 ﻿using ATSourcing.Application.Candidates.Interfaces;
 using ATSourcing.Infrastructure.Candidates;
 using ATSourcing.Infrastructure.Candidates.Extensions;
+using ESFrame.Insfrastructure.Extensions;
 using ESFrame.Insfrastructure.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,8 @@ public static class ServiceCollectionExtensions
         services.AddCandidateInfrastructure();
 
         services.AddSingleton<IDomainEventModelConverter, DomainEventModelConverter>();
+
+        services.AddLocalDomainEventDispatcher();
 
         return services;
     }

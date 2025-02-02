@@ -12,4 +12,6 @@ public class CandidateCreatedEvent : DomainEvent<Guid, CandidateCreatedEventData
         Data = data;
         TimeStamp = createdDate;
     }
+    
+    public override string Name => nameof(CandidateCreatedEvent);
 }

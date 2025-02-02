@@ -3,8 +3,7 @@ using Projects;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var cosmos = builder
-    .AddAzureCosmosDB("cosmos-db")
-    .RunAsEmulator();
+    .AddConnectionString("cosmos-db");
 
 var api = builder.AddProject<ATSourcing_Api>("api")
     .WithReference(cosmos);

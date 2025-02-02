@@ -56,7 +56,8 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>, IAggregateR
     private Result ApplyCreatedEvent(CandidateCreatedEvent @event)
     {
         //TODO add validation
-        
+
+        Id = @event.AggregateId;
         FirstName = @event.Data.FirstName;
         LastName = @event.Data.LastName;
         Age = @event.Data.Age;

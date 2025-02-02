@@ -52,7 +52,8 @@ public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<
 
         await AttributeAggregateKeyAsync(aggregate, cancellationToken);
 
-        var domainEvents = aggregate.DomainEvents;
+        var domainEvents = aggregate.DomainEvents
+            .ToList();
 
         aggregate.ClearDomainEvents();
 
@@ -63,15 +64,13 @@ public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<
         return Result.Ok();
     }
 
-    protected virtual Task AttributeAggregateKeyAsync(TAggregate aggregate, CancellationToken cancellationToken)
+    protected virtual async Task AttributeAggregateKeyAsync(TAggregate aggregate, CancellationToken cancellationToken)
     {
         if (aggregate.Id is null || aggregate.Id.Equals(default(TKey)))
         {
-            var key = CreateKeyAsync(cancellationToken);
+            var key = await CreateKeyAsync(cancellationToken);
             aggregate.GetType().GetProperty(nameof(aggregate.Id))?.SetValue(aggregate, key);
         }
-
-        return Task.CompletedTask;
     }
 
     protected abstract Task<TKey> CreateKeyAsync(CancellationToken cancellationToken);

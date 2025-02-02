@@ -29,7 +29,7 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
             cancellationToken);
 
         var iter = container.GetItemQueryIterator<int>(new QueryDefinition(
-            $"SELECT COUNT(*) FROM c WHERE c.aggregateId = '{aggregateId}' AND c.timeStamp > '{from}'"));
+            $"SELECT VALUE COUNT(c.id) FROM c WHERE c.aggregateId = '{aggregateId}' AND c.timeStamp > '{from}'"));
 
         return (await iter.ReadNextAsync(cancellationToken))
             .First();

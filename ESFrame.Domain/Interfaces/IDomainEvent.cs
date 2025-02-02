@@ -26,11 +26,11 @@ public abstract class DomainEvent<TKey, TData> : IDomainEvent<TKey, TData> where
 {
     public TData Data { get; protected set; } = null!;
 
-    public virtual TKey AggregateId { get; protected set; } = default!;
+    public TKey AggregateId { get; protected set; } = default!;
 
-    public virtual DateTimeOffset TimeStamp { get; protected set; }
+    public DateTimeOffset TimeStamp { get; protected set; }
 
-    public virtual string Name { get; protected set; } = string.Empty;
+    public abstract string Name { get; }
 
     object IDomainEventWithData<TKey>.GenericData => Data;
 }

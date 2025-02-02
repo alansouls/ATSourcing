@@ -8,7 +8,7 @@ namespace ESFrame.Infrastructure.CosmosDB.Extensions;
 
 public static class HostApplicationBuilderExtensions
 {
-    public static IHostApplicationBuilder AddCosmosDB(this IHostApplicationBuilder builder, string connectionName)
+    public static IHostApplicationBuilder AddCosmosInfrastructure(this IHostApplicationBuilder builder, string connectionName)
     {
         builder.AddAzureCosmosClient(connectionName);
 

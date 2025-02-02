@@ -1,6 +1,5 @@
 ﻿using ATSourcing.Application.Candidates.Interfaces;
 using ESFrame.Insfrastructure.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ATSourcing.Infrastructure.Candidates.Extensions;

@@ -164,7 +164,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>, IAggregateR
     {
         return new CandidateSnapshot
         {
-            Id = Id,
+            AggregateId = Id,
             FirstName = FirstName,
             LastName = LastName,
             Age = Age,

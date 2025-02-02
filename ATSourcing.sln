@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.Application", "ATSourcing.Application\ATSourcing.Application.csproj", "{040B294F-E6C4-4BB8-B52A-527022F7E0C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.Api", "ATSourcing.Api\ATSourcing.Api.csproj", "{0EE129C4-140D-47E1-B832-1D5CF2632914}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{040B294F-E6C4-4BB8-B52A-527022F7E0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{040B294F-E6C4-4BB8-B52A-527022F7E0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{040B294F-E6C4-4BB8-B52A-527022F7E0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,5 +90,6 @@ Global
 		{AA02121D-2D38-4B2F-9153-6EA276FABED0} = {B858E318-F2E2-4328-B648-AF5446E68D81}
 		{5AFBF45E-AF33-4510-8E8E-AE9EC80BB8E9} = {F376CDB5-C56C-40A1-9B72-50DB79E2E207}
 		{040B294F-E6C4-4BB8-B52A-527022F7E0C9} = {F376CDB5-C56C-40A1-9B72-50DB79E2E207}
+		{0EE129C4-140D-47E1-B832-1D5CF2632914} = {FB7B051C-A5D6-4638-A4BD-F73F932E736D}
 	EndGlobalSection
 EndGlobal

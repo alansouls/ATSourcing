@@ -1,6 +1,6 @@
 ﻿using ESFrame.Domain.Interfaces;
 
-namespace ESFrame.Insfrastructure.Interfaces;
+namespace ESFrame.Application.Interfaces;
 
 public interface IDomainEventDispatcher
 {

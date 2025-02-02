@@ -1,7 +1,6 @@
-﻿
-using ESFrame.Domain.Interfaces;
+﻿using ESFrame.Domain.Interfaces;
 
-namespace ESFrame.Insfrastructure.Interfaces;
+namespace ESFrame.Application.Interfaces;
 
 public interface ISnapshotRepository
 {
@@ -10,7 +9,7 @@ public interface ISnapshotRepository
         where TAggregate : IAggregateRoot<TKey>;
 
     Task SaveAsync<TAggregate, TSnapshot, TKey>(TSnapshot aggregate, CancellationToken cancellationToken)
-        where TSnapshot : class, IEntitySnapshot<TKey> 
+        where TSnapshot : class, IEntitySnapshot<TKey>
         where TKey : IEquatable<TKey>
         where TAggregate : IAggregateRoot<TKey>;
 }

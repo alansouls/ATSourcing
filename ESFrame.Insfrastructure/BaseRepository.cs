@@ -1,6 +1,5 @@
 ﻿using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
-using ESFrame.Insfrastructure.Interfaces;
 using FluentResults;
 
 namespace ESFrame.Insfrastructure;

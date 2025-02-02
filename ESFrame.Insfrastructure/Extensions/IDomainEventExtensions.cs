@@ -1,8 +1,8 @@
-using System.Text.Json;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure.Models;
+using System.Text.Json;
 
-namespace ESFrame.Infrastructure.CosmosDB.Extensions;
+namespace ESFrame.Insfrastructure.Extensions;
 
 public static class IDomainEventExtensions
 {
@@ -10,12 +10,14 @@ public static class IDomainEventExtensions
     {
         return new DomainEventModel
         {
+            Id = Guid.NewGuid(),
             AggregateId = domainEvent.AggregateId.ToString()!,
             Name = domainEvent.Name,
             TimeStamp = domainEvent.TimeStamp,
             DataJson = domainEvent switch
             {
-                IDomainEvent<TKey, >
+                IDomainEventWithData<TKey> eventWithData => JsonSerializer.Serialize(eventWithData.GenericData),
+                _ => null
             }
         };
     }

@@ -153,11 +153,11 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>, IAggregateR
         AddEvent(updatedEvent);
     }
 
-    public void Delete()
+    public Result Delete(DateTimeOffset deletedAt)
     {
-        var deletedEvent = new CandidateDeletedEvent(Id, DateTimeOffset.UtcNow);
+        var deletedEvent = new CandidateDeletedEvent(Id, deletedAt);
         
-        AddEvent(deletedEvent);
+        return AddEvent(deletedEvent);
     }
 
     public CandidateSnapshot ToSnapshot()

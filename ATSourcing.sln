@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.Application", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.Api", "ATSourcing.Api\ATSourcing.Api.csproj", "{0EE129C4-140D-47E1-B832-1D5CF2632914}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATSourcing.CosmosDBConfigurer", "ATSourcing.CosmosDBConfigurer\ATSourcing.CosmosDBConfigurer.csproj", "{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE129C4-140D-47E1-B832-1D5CF2632914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +97,6 @@ Global
 		{5AFBF45E-AF33-4510-8E8E-AE9EC80BB8E9} = {F376CDB5-C56C-40A1-9B72-50DB79E2E207}
 		{040B294F-E6C4-4BB8-B52A-527022F7E0C9} = {F376CDB5-C56C-40A1-9B72-50DB79E2E207}
 		{0EE129C4-140D-47E1-B832-1D5CF2632914} = {FB7B051C-A5D6-4638-A4BD-F73F932E736D}
+		{34ADADE5-3FF9-4A4F-8AE7-9AC5C5DA8512} = {FB7B051C-A5D6-4638-A4BD-F73F932E736D}
 	EndGlobalSection
 EndGlobal

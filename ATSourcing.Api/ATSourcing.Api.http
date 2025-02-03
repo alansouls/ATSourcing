@@ -1,6 +1,6 @@
-@ATSourcing.Api_HostAddress = https://localhost:7017
+@ATSourcing.Api_HostAddress = https://localhost:60368
 
-POST  https://localhost:7017/candidates/
+POST  {{ATSourcing.Api_HostAddress}}/candidates/
 Accept: application/json
 
 ###

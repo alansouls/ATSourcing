@@ -7,7 +7,8 @@ var cosmos = builder.AddAzureCosmosDB("cosmos-db");
 
 if (builder.Environment.IsDevelopment())
 {
-    cosmos.RunAsEmulator();
+    cosmos
+        .RunAsEmulator(emulator => emulator.WithHttpsEndpoint(port: 8082, targetPort: 8081));
 }
 
 var dbConfigurer = builder.AddProject<ATSourcing_CosmosDBConfigurer>("db-configurer")

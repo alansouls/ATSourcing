@@ -8,7 +8,10 @@ var cosmos = builder.AddAzureCosmosDB("cosmos-db");
 if (builder.Environment.IsDevelopment())
 {
     cosmos
-        .RunAsEmulator(emulator => emulator.WithHttpsEndpoint(port: 8082, targetPort: 8081));
+        .RunAsEmulator(emulator => emulator
+            .WithImageTag("vnext-preview")
+            .WithHttpsEndpoint(1234, 1234)
+            .WithEnvironment("PROTOCOL", "https"));
 }
 
 var dbConfigurer = builder.AddProject<ATSourcing_CosmosDBConfigurer>("db-configurer")

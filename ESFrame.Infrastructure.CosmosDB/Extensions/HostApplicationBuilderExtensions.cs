@@ -13,10 +13,11 @@ public static class HostApplicationBuilderExtensions
     public static IHostApplicationBuilder AddCosmosInfrastructure(this IHostApplicationBuilder builder, string connectionName)
     {
         builder.AddAzureCosmosClient(connectionName, 
-            configureClientOptions: options => options.SerializerOptions = new CosmosSerializationOptions()
+            configureClientOptions: options =>
             {
-                PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
-                IgnoreNullValues = false,
+                options.LimitToEndpoint = true;
+                options.ConnectionMode = ConnectionMode.Gateway;
+                options.SerializerOptions.PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase;
             });
 
         builder.Services.AddScoped<IContainerFactory, ContainerFactory>();

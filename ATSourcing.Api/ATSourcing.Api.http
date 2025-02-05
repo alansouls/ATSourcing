@@ -1,6 +1,15 @@
 @ATSourcing.Api_HostAddress = https://localhost:60368
 
-POST  {{ATSourcing.Api_HostAddress}}/candidates/
+POST  https://localhost:7017/api/v1/candidates/
 Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "Alan",
+  "lastName": "Maia",
+  "email": "maiaalan@gmail.com",
+  "age": 25,
+  "userId": "{{$random.uuid}}"
+}
 
 ###

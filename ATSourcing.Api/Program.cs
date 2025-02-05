@@ -1,3 +1,4 @@
+using ATSourcing.Api.Candidates;
 using ATSourcing.Application.Candidates.Requests.Commands;
 using ATSourcing.Application.Extensions;
 using ATSourcing.Infrastructure.Extensions;
@@ -28,17 +29,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("candidates", async (IMediator mediator, CancellationToken cancellationToken) =>
-{
-    var result = await mediator.Send(new CreateCandidateCommand("John", "Doe", 25, "alan.maia@email.com", Guid.NewGuid()),
-        cancellationToken);
-
-    if (result.IsFailed)
-    {
-        return Results.BadRequest();
-    }
-
-    return Results.Ok();
-});
+app.MapCandidateEndpoints();
 
 app.Run();

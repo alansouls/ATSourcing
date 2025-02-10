@@ -6,7 +6,7 @@ using FluentResults;
 
 namespace ATSourcing.Domain.Candidates;
 
-public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>, IAggregateRoot<Guid>
+public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
 {
     public string FirstName { get; private set; } = null!;
     public string LastName { get; private set; } = null!;
@@ -161,7 +161,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>, IAggregateR
         return AddEvent(deletedEvent);
     }
 
-    public CandidateSnapshot ToSnapshot()
+    public override CandidateSnapshot CreateSnapshot()
     {
         return new CandidateSnapshot
         {

@@ -26,7 +26,8 @@ internal class CosmosConfigurerService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await _cosmosClient.CreateDatabaseIfNotExistsAsync(_cosmosOptions.Value.DatabaseId, cancellationToken: cancellationToken);
+        await _cosmosClient.CreateDatabaseIfNotExistsAsync(_cosmosOptions.Value.DomainDatabaseId, cancellationToken: cancellationToken);
+        await _cosmosClient.CreateDatabaseIfNotExistsAsync(_cosmosOptions.Value.ViewDatabaseId, cancellationToken: cancellationToken);
         _applicationLifetime.StopApplication();
     }
 

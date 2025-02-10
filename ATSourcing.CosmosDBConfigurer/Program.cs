@@ -8,7 +8,8 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
 {
-    { "CosmosDB:DatabaseId", "atsourcing" }
+    { "CosmosDB:DomainDatabaseId", "atsourcing" },
+    { "CosmosDB:ViewDatabaseId", "atsourcing-views" }
 }!);
 
 builder.AddCosmosInfrastructure("cosmos-db");

@@ -31,4 +31,9 @@ app.UseHttpsRedirection();
 
 app.MapCandidateEndpoints();
 
+app.MapGet("weatherforecast", (int a, int b) =>
+{
+    return a + b;
+});
+
 app.Run();

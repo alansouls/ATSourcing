@@ -4,5 +4,7 @@ public class CosmosOptions
 {
     public const string OptionsName = "CosmosDB";
 
-    public string DatabaseId { get; set; } = string.Empty;
+    public string DomainDatabaseId { get; set; } = string.Empty;
+
+    public string ViewDatabaseId { get; set; } = string.Empty;
 }

@@ -4,5 +4,6 @@ namespace ESFrame.Infrastructure.CosmosDB.Interfaces;
 
 public interface IContainerFactory
 {
-    Task<Container> GetOrCreateContainerAsync(string containerName, CancellationToken cancellationToken);
+    Task<Container> GetOrCreateDomainContainerAsync(string containerName, CancellationToken cancellationToken);
+    Task<Container> GetOrCreateViewContainerAsync(string containerName, string partitionKeyPath, CancellationToken cancellationToken);
 }

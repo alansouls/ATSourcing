@@ -1,6 +1,7 @@
 ﻿using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Infrastructure.CosmosDB.Interfaces;
+using ESFrame.Insfrastructure.Models;
 using Microsoft.Azure.Cosmos;
 
 namespace ESFrame.Infrastructure.CosmosDB;
@@ -20,7 +21,7 @@ internal class SnapshotRepository : ISnapshotRepository
         where TSnapshot : class, IEntitySnapshot<TKey> where TKey : IEquatable<TKey>
         where TAggregate : IAggregateRoot<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix, 
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix, 
             cancellationToken);
 
         var iter = container.GetItemQueryIterator<TSnapshot>(new QueryDefinition(
@@ -36,7 +37,7 @@ internal class SnapshotRepository : ISnapshotRepository
         where TKey : IEquatable<TKey>
         where TAggregate : IAggregateRoot<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix,
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix,
             cancellationToken);
 
         await container.CreateItemAsync(aggregate, 

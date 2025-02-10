@@ -4,8 +4,8 @@ using FluentResults;
 
 namespace ESFrame.Insfrastructure;
 
-public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<TAggregate, TKey> 
-    where TAggregate : class, IAggregateRoot<TKey> 
+public abstract class BaseRepository<TAggregate, TSnapshot, TKey> : IRepository<TAggregate, TSnapshot, TKey> 
+    where TAggregate : class, IAggregateRoot<TSnapshot, TKey> 
     where TKey : IEquatable<TKey> 
     where TSnapshot : class, IEntitySnapshot<TKey>
 {
@@ -28,7 +28,7 @@ public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<
 
         var domainEvents = await _domainEventRepository.GetDomainEventsByAggregateId<TAggregate, TKey>(
             id, 
-            snapshot?.TimeStamp, 
+            snapshot?.TimeStamp,
             cancellationToken);
 
         if (snapshot is null && domainEvents.Count == 0)
@@ -57,9 +57,15 @@ public abstract class BaseRepository<TAggregate, TKey, TSnapshot> : IRepository<
 
         aggregate.ClearDomainEvents();
 
+        if (domainEvents.Count == 0)
+            return Result.Ok();
+
         await _domainEventRepository.SaveAsync<TAggregate, TKey>(aggregate.Id!, domainEvents, cancellationToken);
 
-        await Task.WhenAll(domainEvents.Select(@event => _domainEventDispatcher.DispatchAsync(@event, cancellationToken)));
+        foreach (var domainEvent in domainEvents)
+        {
+            await _domainEventDispatcher.DispatchAsync(domainEvent, cancellationToken);
+        }
 
         return Result.Ok();
     }

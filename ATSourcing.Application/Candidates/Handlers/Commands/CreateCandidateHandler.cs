@@ -20,8 +20,9 @@ internal class CreateCandidateHandler : IRequestHandler<CreateCandidateCommand, 
     {
         var candidate = new Candidate(request.FirstName,
             request.LastName, 
-            request.Age, request.Email, 
-            Guid.NewGuid(), 
+            request.Age, 
+            request.Email, 
+            request.UserId, 
             _timeProvider.GetUtcNow());
 
         var result = await _candidateRepository.SaveChangesAsync(candidate, cancellationToken);

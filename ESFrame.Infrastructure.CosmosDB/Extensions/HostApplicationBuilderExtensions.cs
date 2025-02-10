@@ -17,7 +17,11 @@ public static class HostApplicationBuilderExtensions
             {
                 options.LimitToEndpoint = true;
                 options.ConnectionMode = ConnectionMode.Gateway;
-                options.SerializerOptions.PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase;
+                options.SerializerOptions = new CosmosSerializationOptions
+                {
+                    IgnoreNullValues = false,
+                    PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
+                };
             });
 
         builder.Services.AddScoped<IContainerFactory, ContainerFactory>();

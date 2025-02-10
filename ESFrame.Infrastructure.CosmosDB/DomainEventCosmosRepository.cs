@@ -1,6 +1,5 @@
 ﻿using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
-using ESFrame.Infrastructure.CosmosDB.Extensions;
 using ESFrame.Infrastructure.CosmosDB.Interfaces;
 using ESFrame.Insfrastructure.Extensions;
 using ESFrame.Insfrastructure.Interfaces;
@@ -25,7 +24,7 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
         where TAggregate : IAggregateRoot<TKey>
         where TKey : IEquatable<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + EventsSuffix,
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + EventsSuffix,
             cancellationToken);
 
         var iter = container.GetItemQueryIterator<int>(new QueryDefinition(
@@ -40,11 +39,18 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
         where TKey : IEquatable<TKey>
         where TAggregate : IAggregateRoot<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + EventsSuffix, 
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + EventsSuffix, 
             cancellationToken);
 
-        var iter = container.GetItemQueryIterator<DomainEventModel>(new QueryDefinition(
-            $"SELECT * FROM c WHERE c.aggregateId = '{aggregateId}' AND c.timeStamp > '{from}'"));
+        var query = from.HasValue
+            ? $"SELECT * FROM c WHERE c.aggregateId = '{aggregateId}' AND c.timeStamp > '{from.Value:o}'"
+            : $"SELECT * FROM c WHERE c.aggregateId = '{aggregateId}'";
+
+        var iter = container.GetItemQueryIterator<DomainEventModel>(new QueryDefinition(query),
+            requestOptions: new QueryRequestOptions
+            {
+                PartitionKey = new PartitionKey(aggregateId.ToString())
+            });
 
         var result = new List<IDomainEvent<TKey>>();
         while (iter.HasMoreResults)
@@ -60,7 +66,7 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
         where TAggregate : IAggregateRoot<TKey>
         where TKey : IEquatable<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + EventsSuffix,
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + EventsSuffix,
             cancellationToken);
 
         var iter = container.GetItemQueryIterator<DomainEventModel>(new QueryDefinition(
@@ -75,7 +81,12 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
         where TKey : IEquatable<TKey>
         where TAggregate : IAggregateRoot<TKey>
     {
-        var container = await _containerFactory.GetOrCreateContainerAsync(typeof(TAggregate).Name + EventsSuffix,
+        if (!events.Any())
+        {
+            return;
+        }
+
+        var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + EventsSuffix,
             cancellationToken);
 
         var batch = container.CreateTransactionalBatch(new PartitionKey(aggregateId.ToString()));

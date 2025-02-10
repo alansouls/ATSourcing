@@ -62,7 +62,7 @@ internal class SnapshotCreatorHandler : INotificationHandler<ApplicationNotifica
             return;
         }
 
-        var snapshot = candidate.ToSnapshot();
+        var snapshot = candidate.CreateSnapshot();
 
         snapshot.TimeStamp = domainEvent.TimeStamp;
 

@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ATSourcing.Application\ATSourcing.Application.csproj" />
+      <ProjectReference Include="..\ESFrame.Infrastructure.CosmosDB\ESFrame.Infrastructure.CosmosDB.csproj" />
       <ProjectReference Include="..\ESFrame.Insfrastructure\ESFrame.Insfrastructure.csproj" />
     </ItemGroup>
 

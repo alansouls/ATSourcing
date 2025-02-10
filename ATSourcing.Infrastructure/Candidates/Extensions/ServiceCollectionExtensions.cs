@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<ICandidateRepository, CandidateRepository>();
         services.AddSingleton<IDomainEventConverterModule, DomainEventConverterModule>();
+        services.AddScoped<ICandidateViewService, CandidateViewService>();
 
         return services;
     }

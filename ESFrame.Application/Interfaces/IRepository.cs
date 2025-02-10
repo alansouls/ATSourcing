@@ -3,7 +3,8 @@ using FluentResults;
 
 namespace ESFrame.Application.Interfaces;
 
-public interface IRepository<TAggregate, TKey> where TAggregate : IAggregateRoot<TKey> where TKey : IEquatable<TKey>
+public interface IRepository<TAggregate, TSnapshot, TKey> where TAggregate : IAggregateRoot<TSnapshot, TKey> where TKey : IEquatable<TKey>
+    where TSnapshot : IEntitySnapshot<TKey>
 {
     Task<TAggregate?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default);
 

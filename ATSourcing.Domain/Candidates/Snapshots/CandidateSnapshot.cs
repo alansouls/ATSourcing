@@ -4,6 +4,7 @@ namespace ATSourcing.Domain.Candidates.Snapshots;
 
 public class CandidateSnapshot : IEntitySnapshot<Guid>
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid AggregateId { get; set; }
     public DateTimeOffset TimeStamp { get; set; }
     public required string FirstName { get; set; }

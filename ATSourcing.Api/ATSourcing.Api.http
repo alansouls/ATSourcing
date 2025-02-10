@@ -1,6 +1,7 @@
 @ATSourcing.Api_HostAddress = https://localhost:60368
+@CandidateId = e3f31bc5-a601-42d6-b925-5e638e845bcd
 
-POST  https://localhost:7017/api/v1/candidates/
+POST  https://localhost:53881/api/v1/candidates/
 Accept: application/json
 Content-Type: application/json
 
@@ -9,7 +10,33 @@ Content-Type: application/json
   "lastName": "Maia",
   "email": "maiaalan@gmail.com",
   "age": 25,
-  "userId": "{{$random.uuid}}"
+  "userId": "F03E6EB3-53F2-42B5-B13B-4A5F99C5FE74"
 }
+
+###
+
+GET  https://localhost:53881/api/v1/candidates/{{CandidateId}}
+Accept: application/json
+
+###
+
+GET  https://localhost:53881/api/v1/candidates?page=1&pageSize=6&sort=age&sortDirection=desc
+Accept: application/json
+
+###
+
+Patch  https://localhost:53881/api/v1/candidates/{{CandidateId}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "age": 26,
+  "lastName": "Oliveira Maia"
+}
+
+###
+
+Delete  https://localhost:53881/api/v1/candidates/{{CandidateId}}
+Accept: application/json
 
 ###

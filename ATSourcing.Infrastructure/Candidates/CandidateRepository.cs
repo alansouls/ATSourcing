@@ -7,7 +7,7 @@ using ESFrame.Insfrastructure;
 
 namespace ATSourcing.Infrastructure.Candidates;
 
-public class CandidateRepository : BaseRepository<Candidate, Guid, CandidateSnapshot>, ICandidateRepository
+public class CandidateRepository : BaseRepository<Candidate, CandidateSnapshot, Guid>, ICandidateRepository
 {
     public CandidateRepository(IDomainEventDispatcher domainEventDispatcher,
         ISnapshotRepository snapshotRepository, 

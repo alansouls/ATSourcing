@@ -1,5 +1,6 @@
 using ATSourcing.Domain.Candidates.Events;
 using ATSourcing.Domain.Candidates.Snapshots;
+using ATSourcing.Domain.Jobs.Events;
 using ESFrame.Domain;
 using ESFrame.Domain.Interfaces;
 using FluentResults;
@@ -36,9 +37,9 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         
         return domainEvent switch
         {
-            CandidateCreatedEvent createdEvent => ApplyCreatedEvent(createdEvent),
-            CandidateUpdatedEvent updatedEvent => ApplyUpdatedEvent(updatedEvent),
-            CandidateDeletedEvent deletedEvent => ApplyDeletedEvent(deletedEvent),
+            JobCreatedEvent createdEvent => ApplyCreatedEvent(createdEvent),
+            JobUpdatedEvent updatedEvent => ApplyUpdatedEvent(updatedEvent),
+            JobDeletedEvent deletedEvent => ApplyDeletedEvent(deletedEvent),
             _ => Result.Fail($"Event {domainEvent.Name} is not supported by {nameof(Candidate)}")
         };
     }
@@ -53,7 +54,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         IsDeleted = snapshot.IsDeleted;
     }
 
-    private Result ApplyCreatedEvent(CandidateCreatedEvent @event)
+    private Result ApplyCreatedEvent(JobCreatedEvent @event)
     {
         //TODO add validation
 
@@ -67,7 +68,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         return Result.Ok();
     }
 
-    private Result ApplyUpdatedEvent(CandidateUpdatedEvent updatedEvent)
+    private Result ApplyUpdatedEvent(JobUpdatedEvent updatedEvent)
     {
         if (updatedEvent.Data.FieldName == nameof(FirstName))
         {
@@ -95,7 +96,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         return Result.Ok();
     }
 
-    private Result ApplyDeletedEvent(CandidateDeletedEvent deletedEvent)
+    private Result ApplyDeletedEvent(JobDeletedEvent deletedEvent)
     {
         IsDeleted = true;
 

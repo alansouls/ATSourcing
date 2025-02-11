@@ -1,4 +1,5 @@
 ﻿using ATSourcing.Domain.Candidates.Events;
+using ATSourcing.Domain.Jobs.Events;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure.Interfaces;
 using ESFrame.Insfrastructure.Models;

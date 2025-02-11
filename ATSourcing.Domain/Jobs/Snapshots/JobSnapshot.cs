@@ -1,4 +1,5 @@
-﻿using ESFrame.Domain.Interfaces;
+﻿using ATSourcing.Domain.ValueObjects;
+using ESFrame.Domain.Interfaces;
 
 namespace ATSourcing.Domain.Jobs.Snapshots;
 
@@ -20,7 +21,5 @@ public class JobSnapshot : IEntitySnapshot<Guid>
 
     public int VacancyCount { get; set; }
 
-    public JobSalaryRange? SalaryRange { get; set; }
+    public DecimalRange? SalaryRange { get; set; }
 }
-
-public record JobSalaryRange(decimal Min, decimal Max);

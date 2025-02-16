@@ -37,9 +37,9 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         
         return domainEvent switch
         {
-            JobCreatedEvent createdEvent => ApplyCreatedEvent(createdEvent),
-            JobUpdatedEvent updatedEvent => ApplyUpdatedEvent(updatedEvent),
-            JobDeletedEvent deletedEvent => ApplyDeletedEvent(deletedEvent),
+            CandidateCreatedEvent createdEvent => ApplyCreatedEvent(createdEvent),
+            CandidateUpdatedEvent updatedEvent => ApplyUpdatedEvent(updatedEvent),
+            CandidateDeletedEvent deletedEvent => ApplyDeletedEvent(deletedEvent),
             _ => Result.Fail($"Event {domainEvent.Name} is not supported by {nameof(Candidate)}")
         };
     }
@@ -54,7 +54,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         IsDeleted = snapshot.IsDeleted;
     }
 
-    private Result ApplyCreatedEvent(JobCreatedEvent @event)
+    private Result ApplyCreatedEvent(CandidateCreatedEvent @event)
     {
         //TODO add validation
 
@@ -68,7 +68,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         return Result.Ok();
     }
 
-    private Result ApplyUpdatedEvent(JobUpdatedEvent updatedEvent)
+    private Result ApplyUpdatedEvent(CandidateUpdatedEvent updatedEvent)
     {
         if (updatedEvent.Data.FieldName == nameof(FirstName))
         {
@@ -96,7 +96,7 @@ public class Candidate : BaseAggregateRoot<CandidateSnapshot, Guid>
         return Result.Ok();
     }
 
-    private Result ApplyDeletedEvent(JobDeletedEvent deletedEvent)
+    private Result ApplyDeletedEvent(CandidateDeletedEvent deletedEvent)
     {
         IsDeleted = true;
 

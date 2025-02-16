@@ -1,5 +1,6 @@
 @ATSourcing.Api_HostAddress = https://localhost:60368
 @CandidateId = e3f31bc5-a601-42d6-b925-5e638e845bcd
+@JobId = 772018c6-7ad0-4517-803b-ecb244d6963d
 
 POST  https://localhost:53881/api/v1/candidates/
 Accept: application/json
@@ -37,6 +38,48 @@ Content-Type: application/json
 ###
 
 Delete  https://localhost:53881/api/v1/candidates/{{CandidateId}}
+Accept: application/json
+
+###
+
+POST  https://localhost:53881/api/v1/jobs/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Developer",
+  "description": "Developer Job",
+  "vacancyCount": 1,
+  "applicationDeadline": "2025-03-01",
+  "salaryRange": {
+    "min": 50000,
+    "max": 60000
+  }
+}
+
+###
+
+GET  https://localhost:53881/api/v1/jobs/{{JobId}}
+Accept: application/json
+
+###
+
+GET  https://localhost:53881/api/v1/jobs?page=1&pageSize=6&sort=title&sortDirection=desc
+Accept: application/json
+
+###
+
+Patch  https://localhost:53881/api/v1/jobs/{{JobId}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Developer LV2"
+}
+
+###
+
+Delete  https://localhost:53881/api/v1/jobs/{{JobId}}
 Accept: application/json
 
 ###

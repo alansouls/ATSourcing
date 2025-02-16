@@ -1,4 +1,5 @@
 using ATSourcing.Api.Candidates;
+using ATSourcing.Api.Jobs;
 using ATSourcing.Application.Candidates.Requests.Commands;
 using ATSourcing.Application.Extensions;
 using ATSourcing.Infrastructure.Extensions;
@@ -31,9 +32,6 @@ app.UseHttpsRedirection();
 
 app.MapCandidateEndpoints();
 
-app.MapGet("weatherforecast", (int a, int b) =>
-{
-    return a + b;
-});
+app.MapJobEndpoints();
 
 app.Run();

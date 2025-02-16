@@ -11,6 +11,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJobRepository, JobRepository>();
         services.AddSingleton<IDomainEventConverterModule, DomainEventConverterModule>();
 
+        services.AddScoped<IJobViewService, JobViewService>();
+
         return services;
     }
 }

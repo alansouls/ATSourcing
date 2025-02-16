@@ -26,14 +26,6 @@ internal class GetCandidateHandler : IRequestHandler<GetCandidateQuery, Result<C
             return Result.Fail<CandidateInfoView?>(new NotFoundError(nameof(candidate), request.CandidateId.ToString()));
         }
 
-        return new CandidateInfoView
-        {
-            CandidateId = candidate.Id,
-            FirstName = candidate.FirstName,
-            LastName = candidate.LastName,
-            Email = candidate.Email,
-            Age = candidate.Age,
-            UserId = candidate.UserId
-        };
+        return candidate;
     }
 }

@@ -18,8 +18,9 @@ internal class SnapshotRepository : ISnapshotRepository
 
     public async Task<TSnapshot?> GetAsync<TAggregate, TSnapshot, TKey>(TKey aggregateId, 
         CancellationToken cancellationToken)
-        where TSnapshot : class, IEntitySnapshot<TKey> where TKey : IEquatable<TKey>
-        where TAggregate : IAggregateRoot<TKey>
+        where TSnapshot : class, IEntitySnapshot<TKey> 
+        where TKey : IEquatable<TKey>
+        where TAggregate : IAggregateRoot<TSnapshot, TKey>
     {
         var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix, 
             cancellationToken);
@@ -35,7 +36,7 @@ internal class SnapshotRepository : ISnapshotRepository
         CancellationToken cancellationToken)
         where TSnapshot : class, IEntitySnapshot<TKey>
         where TKey : IEquatable<TKey>
-        where TAggregate : IAggregateRoot<TKey>
+        where TAggregate : IAggregateRoot<TSnapshot, TKey>
     {
         var container = await _containerFactory.GetOrCreateDomainContainerAsync(typeof(TAggregate).Name + SnapshotsSuffix,
             cancellationToken);

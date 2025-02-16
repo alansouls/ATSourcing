@@ -1,4 +1,5 @@
-﻿using ATSourcing.Domain.Jobs.Events;
+﻿using ATSourcing.Domain.Candidates.Events;
+using ATSourcing.Domain.Jobs.Events;
 using ATSourcing.Domain.Jobs.Snapshots;
 using ATSourcing.Domain.ValueObjects;
 using ESFrame.Domain;
@@ -13,7 +14,7 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
 
     public string Description { get; private set; } = null!;
 
-    private readonly List<Guid> _candidates = null!;
+    private List<Guid> _candidates = null!;
     public IReadOnlyList<Guid> Candidates => _candidates;
 
     public DateTimeOffset ApplicationDeadline { get; private set; }
@@ -22,14 +23,12 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
 
     public DecimalRange? SalaryRange { get; private set; }
 
-    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount, DecimalRange? salaryRange)
+    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount, DecimalRange? salaryRange, DateTimeOffset createdAt, Guid? id = null)
     {
-        Title = title;
-        Description = description;
-        _candidates = [];
-        ApplicationDeadline = applicationDeadline;
-        VacancyCount = vacancyCount;
-        SalaryRange = salaryRange;
+        var createdEvent = new JobCreatedEvent(id ?? Guid.NewGuid(),
+            new JobCreatedEventData(title, description, applicationDeadline, vacancyCount, salaryRange), createdAt);
+
+        AddEvent(createdEvent);
     }
 
     public Job(IEnumerable<IDomainEvent<Guid>> events, JobSnapshot? snapshot) : base(events, snapshot)
@@ -77,6 +76,7 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         ApplicationDeadline = @event.Data.ApplicationDeadline;
         VacancyCount = @event.Data.VacancyCount;
         SalaryRange = @event.Data.SalaryRange;
+        _candidates = [];
         return Result.Ok();
     }
 
@@ -163,7 +163,7 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(Description), description), updatedAt));
     }
 
-    public Result SetApplicationDeadline(DateTimeOffset applicationDeadline, DateTimeOffset updatedAt)
+    public Result SetApplicationDeadline(DateTimeOffset? applicationDeadline, DateTimeOffset updatedAt)
     {
         if (applicationDeadline < DateTimeOffset.Now)
         {

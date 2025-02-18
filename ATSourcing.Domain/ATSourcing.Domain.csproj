@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ESFrame.Domain\ESFrame.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="JobApplications\Events\" />
-  </ItemGroup>
-
 </Project>

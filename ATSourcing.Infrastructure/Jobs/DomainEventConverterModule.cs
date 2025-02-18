@@ -1,4 +1,5 @@
 ﻿using ATSourcing.Domain.Jobs.Events;
+using ATSourcing.Infrastructure.Jobs.SerializableEventDatas;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure.Interfaces;
 using ESFrame.Insfrastructure.Models;
@@ -13,7 +14,7 @@ internal class DomainEventConverterModule : IDomainEventConverterModule<Guid>
         return domainEvent.Name switch
         {
             nameof(JobCreatedEvent) => new JobCreatedEvent(Guid.Parse(domainEvent.AggregateId),
-                JsonSerializer.Deserialize<JobCreatedEventData>(domainEvent.DataJson!)!, domainEvent.TimeStamp),
+                JsonSerializer.Deserialize<SerializableJobCreatedEventData>(domainEvent.DataJson!)!.ToJobCreatedEventData(), domainEvent.TimeStamp),
             nameof(JobDeletedEvent) => new JobDeletedEvent(Guid.Parse(domainEvent.AggregateId), domainEvent.TimeStamp),
             nameof(JobUpdatedEvent) => new JobUpdatedEvent(Guid.Parse(domainEvent.AggregateId),
                 JsonSerializer.Deserialize<JobUpdatedEventData>(domainEvent.DataJson!)!, domainEvent.TimeStamp),

@@ -1,6 +1,7 @@
 ﻿using ATSourcing.Domain.Candidates.Events;
 using ATSourcing.Domain.Jobs.Events;
 using ATSourcing.Domain.Jobs.Snapshots;
+using ATSourcing.Domain.StepDefinitions.Definitions;
 using ATSourcing.Domain.ValueObjects;
 using ESFrame.Domain;
 using ESFrame.Domain.Interfaces;
@@ -21,12 +22,14 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
 
     public int VacancyCount { get; private set; }
 
+    public StepFlowDefinition StepFlow { get; private set; } = null!;
+
     public DecimalRange? SalaryRange { get; private set; }
 
-    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount, DecimalRange? salaryRange, DateTimeOffset createdAt, Guid? id = null)
+    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount, StepFlowDefinition stepFlow, DecimalRange? salaryRange, DateTimeOffset createdAt, Guid? id = null)
     {
         var createdEvent = new JobCreatedEvent(id ?? Guid.NewGuid(),
-            new JobCreatedEventData(title, description, applicationDeadline, vacancyCount, salaryRange), createdAt);
+            new JobCreatedEventData(title, description, applicationDeadline, vacancyCount, salaryRange, stepFlow), createdAt);
 
         AddEvent(createdEvent);
     }

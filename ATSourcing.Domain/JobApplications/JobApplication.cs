@@ -16,6 +16,7 @@ public class JobApplication : BaseAggregateRoot<JobApplicationSnapshot, Guid>
     private readonly List<Step> _stepHistory = [];
     public IReadOnlyList<Step> StepHistory => _stepHistory;
     public Step CurrentStep => StepHistory.Last();
+    public int CurrentStepIndex => StepHistory.Count - 1;
     public StepState CurrentState => CurrentStep.State;
 
     public JobApplication(Guid candidateId, Guid jobId, Step currentStep, DateTimeOffset createdAt)

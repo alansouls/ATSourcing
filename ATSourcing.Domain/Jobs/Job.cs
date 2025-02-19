@@ -49,7 +49,8 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
             Candidates = _candidates,
             ApplicationDeadline = ApplicationDeadline,
             VacancyCount = VacancyCount,
-            SalaryRange = SalaryRange
+            SalaryRange = SalaryRange,
+            StepFlow = StepFlow.ToSnapshot()
         };
     }
 

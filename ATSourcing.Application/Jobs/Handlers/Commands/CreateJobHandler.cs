@@ -1,6 +1,7 @@
 ﻿using ATSourcing.Application.Jobs.Interfaces;
 using ATSourcing.Application.Jobs.Requests.Commands;
 using ATSourcing.Domain.Jobs;
+using ATSourcing.Domain.StepDefinitions.Definitions;
 using FluentResults;
 using MediatR;
 
@@ -21,8 +22,9 @@ internal class CreateJobHandler : IRequestHandler<CreateJobCommand, Result<Guid>
         var job = new Job(request.Title,
             request.Description, 
             request.ApplicationDeadline, 
-            request.VacancyCount, 
-            request.SalaryRange, 
+            request.VacancyCount,
+            request.StepFlowDefinition.ToStepFlowDefinition(),
+            request.SalaryRange,
             _timeProvider.GetUtcNow());
 
         var result = await _jobRepository.SaveChangesAsync(job, cancellationToken);

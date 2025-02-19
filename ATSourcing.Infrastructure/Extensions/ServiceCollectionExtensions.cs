@@ -1,4 +1,5 @@
 ﻿using ATSourcing.Infrastructure.Candidates.Extensions;
+using ATSourcing.Infrastructure.JobApplications.Extensions;
 using ATSourcing.Infrastructure.Jobs.Extensions;
 using ESFrame.Insfrastructure.Extensions;
 using ESFrame.Insfrastructure.Interfaces;
@@ -12,6 +13,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddCandidateInfrastructure();
         services.AddJobInfrastructure();
+        services.AddJobApplicationInfrastructure();
 
         services.AddSingleton<IDomainEventModelConverter, DomainEventModelConverter>();
 

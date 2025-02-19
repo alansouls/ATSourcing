@@ -1,4 +1,5 @@
 ﻿using ESFrame.Domain.Interfaces;
+using ESFrame.Insfrastructure.Extensions;
 using ESFrame.Insfrastructure.Interfaces;
 using ESFrame.Insfrastructure.Models;
 
@@ -26,5 +27,20 @@ internal class DomainEventModelConverter : IDomainEventModelConverter
         }
 
         throw new NotSupportedException($"No converter found for domain event {domainEventModel.Name}");
+    }
+
+    public DomainEventModel ToDomainEventModel<TKey>(IDomainEvent<TKey> domainEvent) where TKey : IEquatable<TKey>
+    {
+        foreach (var convert in _converters.OfType<IDomainEventConverterModule<TKey>>())
+        {
+            var domainEventModel = convert.ConvertToModel(domainEvent);
+
+            if (domainEventModel != null)
+            {
+                return domainEventModel;
+            }
+        }
+
+        return domainEvent.ToModel();
     }
 }

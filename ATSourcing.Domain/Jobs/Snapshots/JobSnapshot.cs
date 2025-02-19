@@ -1,4 +1,6 @@
-﻿using ATSourcing.Domain.ValueObjects;
+﻿using ATSourcing.Domain.StepDefinitions.Definitions;
+using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
+using ATSourcing.Domain.ValueObjects;
 using ESFrame.Domain.Interfaces;
 
 namespace ATSourcing.Domain.Jobs.Snapshots;
@@ -22,4 +24,6 @@ public class JobSnapshot : IEntitySnapshot<Guid>
     public int VacancyCount { get; set; }
 
     public DecimalRange? SalaryRange { get; set; }
+
+    public required StepFlowDefinitionSnapshot StepFlow { get; set; }
 }

@@ -25,4 +25,20 @@ internal class DomainEventConverterModule : IDomainEventConverterModule<Guid>
             _ => null
         };
     }
+
+    public DomainEventModel? ConvertToModel(IDomainEvent<Guid> domainEvent)
+    {
+        return domainEvent switch
+        {
+            JobCreatedEvent createdEvent => new DomainEventModel
+            {
+                Id = Guid.NewGuid(),
+                AggregateId = domainEvent.AggregateId.ToString(),
+                DataJson = JsonSerializer.Serialize(SerializableJobCreatedEventData.FromJobCreatedEventData(createdEvent.Data)),
+                Name = domainEvent.Name,
+                TimeStamp = domainEvent.TimeStamp
+            },
+            _ => null
+        };
+    }
 }

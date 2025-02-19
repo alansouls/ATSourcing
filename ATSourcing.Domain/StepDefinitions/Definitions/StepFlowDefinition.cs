@@ -1,4 +1,6 @@
-﻿namespace ATSourcing.Domain.StepDefinitions.Definitions;
+﻿using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
+
+namespace ATSourcing.Domain.StepDefinitions.Definitions;
 
 public class StepFlowDefinition
 {
@@ -10,5 +12,14 @@ public class StepFlowDefinition
     {
         Current = current;
         Next = next;
+    }
+
+    public StepFlowDefinitionSnapshot ToSnapshot()
+    {
+        return new StepFlowDefinitionSnapshot
+        {
+            Current = Current.ToSnapshot(),
+            Next = Next?.ToSnapshot()
+        };
     }
 }

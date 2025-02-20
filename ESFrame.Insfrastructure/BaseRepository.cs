@@ -64,7 +64,7 @@ public abstract class BaseRepository<TAggregate, TSnapshot, TKey> : IRepository<
 
         foreach (var domainEvent in domainEvents)
         {
-            await _domainEventDispatcher.DispatchAsync(domainEvent, cancellationToken);
+            await _domainEventDispatcher.DispatchAsync(domainEvent, CancellationToken.None);
         }
 
         return Result.Ok();

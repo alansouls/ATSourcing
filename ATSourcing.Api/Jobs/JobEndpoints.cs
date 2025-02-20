@@ -2,7 +2,6 @@
 using ATSourcing.Application.Jobs.Requests.Commands;
 using ATSourcing.Application.Jobs.Requests.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
 
 namespace ATSourcing.Api.Jobs;
 
@@ -60,14 +59,16 @@ public static class JobEndpoints
         return Results.Ok(result.Value);
     }
 
-    private static async Task<IResult> CreateJob(IMediator mediator, CreateJobContract contract, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateJob(IMediator mediator, CreateJobContract contract,
+        CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
             new CreateJobCommand(contract.Title,
                 contract.Description,
                 contract.ApplicationDeadline,
                 contract.VacancyCount,
-                contract.SalaryRange
+                contract.SalaryRange,
+                contract.StepFlowDefinition
             ),
             cancellationToken);
 

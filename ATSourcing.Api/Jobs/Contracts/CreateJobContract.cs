@@ -1,3 +1,4 @@
+using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
 using ATSourcing.Domain.ValueObjects;
 
 namespace ATSourcing.Api.Jobs.Contracts;
@@ -10,4 +11,6 @@ public class CreateJobContract
     public int VacancyCount { get; set; }
 
     public DecimalRange? SalaryRange { get; set; }
+    
+    public StepFlowDefinitionSnapshot StepFlowDefinition { get; set; } = null!;
 }

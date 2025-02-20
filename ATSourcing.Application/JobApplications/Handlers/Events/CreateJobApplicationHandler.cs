@@ -8,20 +8,23 @@ using MediatR;
 
 namespace ATSourcing.Application.JobApplications.Handlers.Events;
 
-internal class CreateJobApplicationHandler : INotificationHandler<ApplicationNotification<JobCandidateApplicationAddedEvent>>
+internal class
+    CreateJobApplicationHandler : INotificationHandler<ApplicationNotification<JobCandidateApplicationAddedEvent>>
 {
     private readonly TimeProvider _timeProvider;
     private readonly IJobRepository _jobRepository;
     private readonly IJobApplicationRepository _jobApplicationRepository;
 
-    public CreateJobApplicationHandler(IJobApplicationRepository jobApplicationRepository, IJobRepository jobRepository, TimeProvider timeProvider)
+    public CreateJobApplicationHandler(IJobApplicationRepository jobApplicationRepository, IJobRepository jobRepository,
+        TimeProvider timeProvider)
     {
         _jobApplicationRepository = jobApplicationRepository;
         _jobRepository = jobRepository;
         _timeProvider = timeProvider;
     }
 
-    public async Task Handle(ApplicationNotification<JobCandidateApplicationAddedEvent> notification, CancellationToken cancellationToken)
+    public async Task Handle(ApplicationNotification<JobCandidateApplicationAddedEvent> notification,
+        CancellationToken cancellationToken)
     {
         var job = await _jobRepository.GetByIdAsync(notification.Event.AggregateId, cancellationToken);
 
@@ -32,7 +35,8 @@ internal class CreateJobApplicationHandler : INotificationHandler<ApplicationNot
 
         var firstStep = job.StepFlow.Current.CreateStep();
 
-        var jobApplication = new JobApplication(notification.Event.Data.CandidateId, notification.Event.AggregateId, firstStep, _timeProvider.GetUtcNow());
+        var jobApplication = new JobApplication(notification.Event.Data.CandidateId, notification.Event.AggregateId,
+            firstStep, _timeProvider.GetUtcNow());
 
         await _jobApplicationRepository.SaveChangesAsync(jobApplication, cancellationToken);
     }

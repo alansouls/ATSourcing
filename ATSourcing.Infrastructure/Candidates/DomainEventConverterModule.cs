@@ -1,5 +1,4 @@
 ﻿using ATSourcing.Domain.Candidates.Events;
-using ATSourcing.Domain.Jobs.Events;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure.Interfaces;
 using ESFrame.Insfrastructure.Models;
@@ -20,5 +19,10 @@ public class DomainEventConverterModule : IDomainEventConverterModule<Guid>
                 JsonSerializer.Deserialize<CandidateUpdatedEventData>(domainEvent.DataJson!)!, domainEvent.TimeStamp),
             _ => null
         };
+    }
+
+    public DomainEventModel? ConvertToModel(IDomainEvent<Guid> domainEvent)
+    {
+        return null;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using ATSourcing.Application.Jobs.Interfaces;
 using ATSourcing.Application.Jobs.Requests.Commands;
 using ATSourcing.Domain.Jobs;
-using ATSourcing.Domain.StepDefinitions.Definitions;
 using FluentResults;
 using MediatR;
 

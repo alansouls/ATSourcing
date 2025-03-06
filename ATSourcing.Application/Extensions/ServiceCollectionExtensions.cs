@@ -1,5 +1,4 @@
 using ATSourcing.Application.Candidates.Requests.Commands;
-using ATSourcing.Domain.Candidates.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ATSourcing.Application.Extensions;

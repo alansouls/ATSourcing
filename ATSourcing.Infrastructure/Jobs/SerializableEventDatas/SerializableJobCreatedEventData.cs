@@ -1,8 +1,5 @@
 ﻿using ATSourcing.Domain.Jobs.Events;
-using ATSourcing.Domain.StepDefinitions;
-using ATSourcing.Domain.StepDefinitions.Definitions;
 using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
-using ATSourcing.Domain.StepDefinitions.Enums;
 using ATSourcing.Domain.ValueObjects;
 
 namespace ATSourcing.Infrastructure.Jobs.SerializableEventDatas;

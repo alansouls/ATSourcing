@@ -1,10 +1,8 @@
 using ATSourcing.Api.Candidates;
 using ATSourcing.Api.Jobs;
-using ATSourcing.Application.Candidates.Requests.Commands;
 using ATSourcing.Application.Extensions;
 using ATSourcing.Infrastructure.Extensions;
 using ESFrame.Infrastructure.CosmosDB.Extensions;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -21,6 +21,8 @@ public static class JobEndpoints
 
         group.MapDelete("{jobId:guid}", DeleteJob);
 
+        group.MapPost("{jobId:guid}/application", ApplyForJob);
+
         return app;
     }
 
@@ -108,6 +110,20 @@ public static class JobEndpoints
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteJobCommand(jobId),
+            cancellationToken);
+
+        if (result.IsFailed)
+        {
+            return Results.BadRequest();
+        }
+
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> ApplyForJob(Guid jobId, AddApplicationContract contract, IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new AddCandidateApplicationCommand(jobId, contract.CandidateId),
             cancellationToken);
 
         if (result.IsFailed)

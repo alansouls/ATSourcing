@@ -1,7 +1,6 @@
 using ATSourcing.Application.Candidates.Interfaces;
 using ATSourcing.Application.Candidates.Requests.Commands;
 using ATSourcing.Domain.Candidates;
-using ESFrame.Application;
 using ESFrame.Application.Errors;
 using FluentResults;
 using MediatR;

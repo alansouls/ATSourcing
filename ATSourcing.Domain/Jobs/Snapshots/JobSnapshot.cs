@@ -1,5 +1,4 @@
-﻿using ATSourcing.Domain.StepDefinitions.Definitions;
-using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
+﻿using ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
 using ATSourcing.Domain.ValueObjects;
 using ESFrame.Domain.Interfaces;
 

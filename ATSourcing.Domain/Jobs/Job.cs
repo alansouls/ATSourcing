@@ -1,5 +1,4 @@
-﻿using ATSourcing.Domain.Candidates.Events;
-using ATSourcing.Domain.Jobs.Events;
+﻿using ATSourcing.Domain.Jobs.Events;
 using ATSourcing.Domain.Jobs.Snapshots;
 using ATSourcing.Domain.StepDefinitions.Definitions;
 using ATSourcing.Domain.ValueObjects;
@@ -26,10 +25,12 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
 
     public DecimalRange? SalaryRange { get; private set; }
 
-    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount, StepFlowDefinition stepFlow, DecimalRange? salaryRange, DateTimeOffset createdAt, Guid? id = null)
+    public Job(string title, string description, DateTimeOffset applicationDeadline, int vacancyCount,
+        StepFlowDefinition stepFlow, DecimalRange? salaryRange, DateTimeOffset createdAt, Guid? id = null)
     {
         var createdEvent = new JobCreatedEvent(id ?? Guid.NewGuid(),
-            new JobCreatedEventData(title, description, applicationDeadline, vacancyCount, salaryRange, stepFlow), createdAt);
+            new JobCreatedEventData(title, description, applicationDeadline, vacancyCount, salaryRange, stepFlow),
+            createdAt);
 
         AddEvent(createdEvent);
     }
@@ -66,8 +67,10 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
             JobCreatedEvent createdEvent => ApplyCreatedEvent(createdEvent),
             JobUpdatedEvent updatedEvent => ApplyUpdatedEvent(updatedEvent),
             JobDeletedEvent deletedEvent => ApplyDeletedEvent(deletedEvent),
-            JobCandidateApplicationAddedEvent candidateApplicationAddedEvent => ApplyAddCandidateApplicationEvent(candidateApplicationAddedEvent),
-            JobCandidateApplicationRemovedEvent candidateApplicationRemovedEvent => ApplyRemoveCandidateApplicationEvent(candidateApplicationRemovedEvent),
+            JobCandidateApplicationAddedEvent candidateApplicationAddedEvent => ApplyAddCandidateApplicationEvent(
+                candidateApplicationAddedEvent),
+            JobCandidateApplicationRemovedEvent candidateApplicationRemovedEvent =>
+                ApplyRemoveCandidateApplicationEvent(candidateApplicationRemovedEvent),
             _ => Result.Fail($"Event {domainEvent.Name} is not supported by {nameof(Job)}")
         };
     }
@@ -164,6 +167,7 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         {
             return Result.Fail("Description cannot be empty");
         }
+
         return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(Description), description), updatedAt));
     }
 
@@ -173,7 +177,10 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         {
             return Result.Fail("Application deadline cannot be in the past");
         }
-        return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(ApplicationDeadline), applicationDeadline.ToString()), updatedAt));
+
+        return AddEvent(new JobUpdatedEvent(Id,
+            new JobUpdatedEventData(nameof(ApplicationDeadline), applicationDeadline?.ToString() ?? string.Empty),
+            updatedAt));
     }
 
     public Result SetVacancyCount(int vacancyCount, DateTimeOffset updatedAt)
@@ -182,12 +189,15 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         {
             return Result.Fail("Vacancy count cannot be less than 1");
         }
-        return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(VacancyCount), vacancyCount.ToString()), updatedAt));
+
+        return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(VacancyCount), vacancyCount.ToString()),
+            updatedAt));
     }
 
     public Result SetSalaryRange(DecimalRange salaryRange, DateTimeOffset updatedAt)
     {
-        return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(SalaryRange), salaryRange.ToString()), updatedAt));
+        return AddEvent(new JobUpdatedEvent(Id, new JobUpdatedEventData(nameof(SalaryRange), salaryRange.ToString()),
+            updatedAt));
     }
 
     public Result Delete(DateTimeOffset deletedAt)
@@ -197,11 +207,13 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
 
     public Result AddCandidateApplication(Guid candidateId, DateTimeOffset addedAt)
     {
-        return AddEvent(new JobCandidateApplicationAddedEvent(Id, new JobCandidateApplicationAddedEventData(candidateId), addedAt));
+        return AddEvent(new JobCandidateApplicationAddedEvent(Id,
+            new JobCandidateApplicationAddedEventData(candidateId), addedAt));
     }
 
     public Result RemoveCandidateApplication(Guid candidateId, DateTimeOffset removedAt)
     {
-        return AddEvent(new JobCandidateApplicationRemovedEvent(Id, new JobCandidateApplicationRemovedEventData(candidateId), removedAt));
+        return AddEvent(new JobCandidateApplicationRemovedEvent(Id,
+            new JobCandidateApplicationRemovedEventData(candidateId), removedAt));
     }
 }

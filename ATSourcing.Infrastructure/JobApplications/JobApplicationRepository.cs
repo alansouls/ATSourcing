@@ -4,7 +4,6 @@ using ATSourcing.Domain.JobApplications.Snapshots;
 using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure;
-using FluentResults;
 
 namespace ATSourcing.Infrastructure.JobApplications;
 

@@ -2,7 +2,6 @@
 using ATSourcing.Application.Candidates.Requests.Commands;
 using ATSourcing.Application.Candidates.Requests.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
 
 namespace ATSourcing.Api.Candidates;
 

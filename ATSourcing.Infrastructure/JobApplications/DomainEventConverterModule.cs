@@ -1,5 +1,4 @@
 ﻿using ATSourcing.Domain.JobApplications.Events;
-using ATSourcing.Domain.Jobs.Events;
 using ATSourcing.Infrastructure.JobApplications.SerializableEventDatas;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Insfrastructure.Interfaces;

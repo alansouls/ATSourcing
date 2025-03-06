@@ -2,7 +2,6 @@
 using ATSourcing.Application.Jobs.Interfaces;
 using ATSourcing.Domain.JobApplications;
 using ATSourcing.Domain.Jobs.Events;
-using ATSourcing.Domain.StepDefinitions;
 using ESFrame.Application;
 using MediatR;
 

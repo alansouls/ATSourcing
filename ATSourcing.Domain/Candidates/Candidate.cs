@@ -1,6 +1,5 @@
 using ATSourcing.Domain.Candidates.Events;
 using ATSourcing.Domain.Candidates.Snapshots;
-using ATSourcing.Domain.Jobs.Events;
 using ESFrame.Domain;
 using ESFrame.Domain.Interfaces;
 using FluentResults;

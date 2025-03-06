@@ -1,7 +1,4 @@
-﻿using ATSourcing.Domain.StepDefinitions.Definitions;
-using ATSourcing.Domain.StepDefinitions.Enums;
-
-namespace ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
+﻿namespace ATSourcing.Domain.StepDefinitions.Definitions.Snapshots;
 
 public class StepFlowDefinitionSnapshot
 {

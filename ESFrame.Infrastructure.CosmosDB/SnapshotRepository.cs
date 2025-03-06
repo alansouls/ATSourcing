@@ -1,7 +1,6 @@
 ﻿using ESFrame.Application.Interfaces;
 using ESFrame.Domain.Interfaces;
 using ESFrame.Infrastructure.CosmosDB.Interfaces;
-using ESFrame.Insfrastructure.Models;
 using Microsoft.Azure.Cosmos;
 
 namespace ESFrame.Infrastructure.CosmosDB;

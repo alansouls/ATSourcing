@@ -1,4 +1,4 @@
-using ATSourcing.Application.JobApplications.Interfaces;
+﻿using ATSourcing.Application.JobApplications.Interfaces;
 using ATSourcing.Application.JobApplications.Requests.Queries;
 using ATSourcing.Application.JobApplications.Views;
 using ESFrame.Application.Views;
@@ -7,18 +7,16 @@ using MediatR;
 
 namespace ATSourcing.Application.JobApplications.Handlers.Queries;
 
-public class GetJobApplicationsByCandidateIdHandler : IRequestHandler<GetJobApplicationsByCandidateIdQuery,
-    Result<ViewPagingResult<JobApplicationItemView>>>
+internal class GetJobApplicationsByJobIdHandler : IRequestHandler<GetJobApplicationsByJobIdQuery, Result<ViewPagingResult<JobApplicationItemView>>>
 {
     private readonly IJobApplicationViewService _jobApplicationViewService;
 
-    public GetJobApplicationsByCandidateIdHandler(IJobApplicationViewService jobApplicationViewService)
+    public GetJobApplicationsByJobIdHandler(IJobApplicationViewService jobApplicationViewService)
     {
         _jobApplicationViewService = jobApplicationViewService;
     }
 
-    public async Task<Result<ViewPagingResult<JobApplicationItemView>>> Handle(GetJobApplicationsByCandidateIdQuery request,
-        CancellationToken cancellationToken)
+    public async Task<Result<ViewPagingResult<JobApplicationItemView>>> Handle(GetJobApplicationsByJobIdQuery request, CancellationToken cancellationToken)
     {
         var pagingParameters = ViewPagingParameters.Create(request.Page, request.PageSize, request.Sort,
             request.SortDirection,
@@ -30,7 +28,7 @@ public class GetJobApplicationsByCandidateIdHandler : IRequestHandler<GetJobAppl
         }
 
         return await
-            _jobApplicationViewService.GetJobApplicationItems(request.CandidateId, jobId: null, pagingParameters.Value,
+            _jobApplicationViewService.GetJobApplicationItems(candidateId: null, jobId: request.JobId, pagingParameters.Value,
                 cancellationToken);
     }
 }

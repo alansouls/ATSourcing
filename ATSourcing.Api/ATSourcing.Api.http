@@ -1,6 +1,7 @@
 @ATSourcing.Api_HostAddress = https://localhost:60368
 @CandidateId = e3f31bc5-a601-42d6-b925-5e638e845bcd
-@JobId = 772018c6-7ad0-4517-803b-ecb244d6963d
+@JobId = de2deca0-1252-45bd-b5f7-38518503f3a0
+@JobApplicationId = 8b97c4e1-5831-4f9f-a2a2-69b4c44746ef
 
 POST  https://localhost:53881/api/v1/candidates/
 Accept: application/json
@@ -54,6 +55,26 @@ Content-Type: application/json
   "salaryRange": {
     "min": 50000,
     "max": 60000
+  },
+  "stepFlowDefinition": {
+    "current": {
+      "name": "Conversation",
+      "description": "Conversation Step",
+      "startingState": 0,
+      "specificData": {
+        "Question": "Why do you want to work at our company?"
+      }
+    },
+    "next": {
+      "current": {
+        "name": "Conversation",
+        "description": "Conversation Step",
+        "startingState": 0,
+        "specificData": {
+          "Question": "What's your salary expectation?"
+        }
+      }
+    }
   }
 }
 
@@ -81,5 +102,54 @@ Content-Type: application/json
 
 Delete  https://localhost:53881/api/v1/jobs/{{JobId}}
 Accept: application/json
+
+###
+
+POST  https://localhost:53881/api/v1/jobs/{{JobId}}/application
+Accept: application/json
+Content-Type: application/json
+
+{
+  "candidateId": "442dd96e-b9c3-440b-9d4b-b38c01676154"
+}
+
+###
+
+GET  https://localhost:53881/api/v1/job-applications/jobs/{{JobId}}?page=1&pageSize=5
+Accept: application/json
+
+###
+
+GET  https://localhost:53881/api/v1/job-applications/{{JobApplicationId}}
+Accept: application/json
+
+###
+
+POST  https://localhost:53881/api/v1/job-applications/{{JobApplicationId}}/answer
+Accept: application/json
+Content-Type: application/json
+
+{
+  "answer": "I don't think that works for me, minimum I can accept is 82k"
+}
+
+###
+
+POST  https://localhost:53881/api/v1/job-applications/{{JobApplicationId}}/approve-step
+Accept: application/json
+Content-Type: application/json
+
+{
+}
+
+###
+
+POST  https://localhost:53881/api/v1/job-applications/{{JobApplicationId}}/reject-step
+Accept: application/json
+Content-Type: application/json
+
+{
+  "finalObservations": "Candidate asked for a salary above approved budget."
+}
 
 ###

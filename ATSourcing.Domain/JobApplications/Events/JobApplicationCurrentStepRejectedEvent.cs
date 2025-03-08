@@ -3,7 +3,7 @@ using ESFrame.Domain.Interfaces;
 
 namespace ATSourcing.Domain.JobApplications.Events;
 
-public record JobApplicationCurrentStepRejectedEventData(Step? NextStep, string? FinalObservation);
+public record JobApplicationCurrentStepRejectedEventData(string? FinalObservation);
 
 public class JobApplicationCurrentStepRejectedEvent : DomainEvent<Guid, JobApplicationCurrentStepRejectedEventData>
 {

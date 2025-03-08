@@ -64,9 +64,9 @@ public class JobApplication : BaseAggregateRoot<JobApplicationSnapshot, Guid>
         return AddEvent(new JobApplicationCurrentStepApprovedEvent(Id, new JobApplicationCurrentStepApprovedEventData(nextStep, finalObservation), approvedDate));
     }
 
-    public Result RejectCurrentStep(Step? nextStep, string? finalObservation, DateTimeOffset rejectedDate)
+    public Result RejectCurrentStep(string? finalObservation, DateTimeOffset rejectedDate)
     {
-        return AddEvent(new JobApplicationCurrentStepRejectedEvent(Id, new JobApplicationCurrentStepRejectedEventData(nextStep, finalObservation), rejectedDate));
+        return AddEvent(new JobApplicationCurrentStepRejectedEvent(Id, new JobApplicationCurrentStepRejectedEventData(finalObservation), rejectedDate));
     }
 
     public override JobApplicationSnapshot CreateSnapshot()
@@ -96,6 +96,7 @@ public class JobApplication : BaseAggregateRoot<JobApplicationSnapshot, Guid>
 
     private Result ApplyCreatedEvent(JobApplicationCreatedEvent @event)
     {
+        Id = @event.AggregateId;
         CandidateId = @event.Data.CandidateId;
         JobId = @event.Data.JobId;
         _stepHistory.Add(@event.Data.CurrentStep);
@@ -135,10 +136,6 @@ public class JobApplication : BaseAggregateRoot<JobApplicationSnapshot, Guid>
     private Result ApplyCurrentStepRejectedEvent(JobApplicationCurrentStepRejectedEvent @event)
     {
         CurrentStep.Reject(@event.Data.FinalObservation);
-        if (@event.Data.NextStep is not null)
-        {
-            _stepHistory.Add(@event.Data.NextStep);
-        }
         return Result.Ok();
     }
 

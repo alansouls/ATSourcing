@@ -10,7 +10,11 @@ public class StepSnapshot
 
     public required string Description { get; set; }
 
+    public required string Title { get; set; }
+
     public required StepState State { get; set; }
+
+    public string? FinalObservations { get; set; }
 
     public Dictionary<string, string?> Fields { get; set; } = [];
 
@@ -22,13 +26,15 @@ public class StepSnapshot
                 State, 
                 GetStringEnumerableField(nameof(FileUploadStep.RequiredFiles)),
                 GetStringEnumerableField(nameof(FileUploadStep.ReturnObservations)),
-                GetDictionaryField<string, Guid>(nameof(FileUploadStep.UploadedFiles))
+                GetDictionaryField<string, Guid>(nameof(FileUploadStep.UploadedFiles)),
+                FinalObservations
                 ).Bind<Step>(s => s),
             "Conversation" => ConversationStep.Restore(
                 State,
-                Fields.GetValueOrDefault(nameof(ConversationStep.Question)) ?? "",
+                GetValueFromFields(nameof(ConversationStep.Question)) ?? "",
                 GetStringEnumerableField(nameof(ConversationStep.CandidateAnswers)),
-                GetStringEnumerableField(nameof(ConversationStep.RecruiterAnswers))
+                GetStringEnumerableField(nameof(ConversationStep.RecruiterAnswers)),
+                FinalObservations
                 ).Bind<Step>(v => v),
             _ => Result.Fail("Unknown step type")
         };
@@ -36,7 +42,7 @@ public class StepSnapshot
 
     private IEnumerable<string> GetStringEnumerableField(string fieldName)
     {
-        var value = Fields.GetValueOrDefault(fieldName);
+        var value = GetValueFromFields(fieldName);
 
         if (value is null)
         {
@@ -48,11 +54,17 @@ public class StepSnapshot
 
     private Dictionary<TKey, TValue> GetDictionaryField<TKey, TValue>(string fieldName) where TKey : notnull
     {
-        var value = Fields.GetValueOrDefault(fieldName);
+        var value = GetValueFromFields(fieldName);
         if (value is null)
         {
             return [];
         }
         return JsonSerializer.Deserialize<Dictionary<TKey, TValue>>(value) ?? [];
+    }
+
+    private string? GetValueFromFields(string fieldName)
+    {
+        var pascalCaseFieldName = char.ToLowerInvariant(fieldName[0]) + fieldName[1..];
+        return Fields.GetValueOrDefault(fieldName) ?? Fields.GetValueOrDefault(pascalCaseFieldName);
     }
 }

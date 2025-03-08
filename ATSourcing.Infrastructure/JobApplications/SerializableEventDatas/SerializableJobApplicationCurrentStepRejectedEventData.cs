@@ -5,7 +5,6 @@ namespace ATSourcing.Infrastructure.JobApplications.SerializableEventDatas;
 
 internal class SerializableJobApplicationCurrentStepRejectedEventData
 {
-    public StepSnapshot? NextStep { get; set; }
     public string? FinalObservation { get; set; }
 
     public static SerializableJobApplicationCurrentStepRejectedEventData FromJobApplicationCurrentStepRejectedEventData(
@@ -13,7 +12,6 @@ internal class SerializableJobApplicationCurrentStepRejectedEventData
     {
         return new SerializableJobApplicationCurrentStepRejectedEventData
         {
-            NextStep = jobApplicationCurrentStepRejectedEvent.NextStep?.ToSnapshot(),
             FinalObservation = jobApplicationCurrentStepRejectedEvent.FinalObservation
         };
     }
@@ -21,7 +19,6 @@ internal class SerializableJobApplicationCurrentStepRejectedEventData
     public JobApplicationCurrentStepRejectedEventData ToJobApplicationCurrentStepRejectedEventData()
     {
         return new JobApplicationCurrentStepRejectedEventData(
-            NextStep?.ToStep().Value,
             FinalObservation
         );
     }

@@ -20,6 +20,8 @@ public class FileUploadStep : Step
     private readonly Dictionary<string, Guid> _uploadedFiles = [];
     public Dictionary<string, Guid> UploadedFiles => _uploadedFiles;
 
+    public override string Title => $"Upload the following files: {string.Join(", ", RequiredFiles)}";
+
     private FileUploadStep(IEnumerable<string> requiredFiles)
     {
         State = StepState.PendingCandidate;
@@ -39,7 +41,8 @@ public class FileUploadStep : Step
     public static Result<FileUploadStep> Restore(StepState state,
         IEnumerable<string> requiredFiles, 
         IEnumerable<string> returnObservations, 
-        Dictionary<string, Guid> uploadedFiles)
+        Dictionary<string, Guid> uploadedFiles,
+        string? finalObservations)
     {
         if (requiredFiles is null || !requiredFiles.Any())
         {
@@ -54,6 +57,7 @@ public class FileUploadStep : Step
         }
 
         step.State = state;
+        step.FinalObservations = finalObservations;
         return Result.Ok(step);
     }
 
@@ -116,7 +120,9 @@ public class FileUploadStep : Step
         {
             Name = Name,
             Description = Description,
+            Title = Title,
             State = State,
+            FinalObservations = FinalObservations,
             Fields = new Dictionary<string, string?>
             {
                 { nameof(RequiredFiles), JsonSerializer.Serialize(RequiredFiles) },

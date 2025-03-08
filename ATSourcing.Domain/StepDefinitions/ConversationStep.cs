@@ -11,13 +11,15 @@ public class ConversationStep : Step
 
     public override string Description => "Conversation with the candidate";
 
-    public string? Question { get; private set; }
+    public string Question { get; private set; }
 
     private readonly List<string> _candidateAnswers = [];
     public List<string> CandidateAnswers => _candidateAnswers;
 
     private readonly List<string> _recruiterAnswers = [];
     public List<string> RecruiterAnswers => _recruiterAnswers;
+
+    public override string Title => Question;
 
     private ConversationStep(string question)
     {
@@ -35,7 +37,7 @@ public class ConversationStep : Step
         return Result.Ok(new ConversationStep(question));
     }
 
-    public static Result<ConversationStep> Restore(StepState state, string question, IEnumerable<string> candidateAnswers, IEnumerable<string> recruiterAnswers)
+    public static Result<ConversationStep> Restore(StepState state, string question, IEnumerable<string> candidateAnswers, IEnumerable<string> recruiterAnswers, string? finalObservations)
     {
         if (string.IsNullOrWhiteSpace(question))
         {
@@ -45,6 +47,7 @@ public class ConversationStep : Step
         step._candidateAnswers.AddRange(candidateAnswers);
         step._recruiterAnswers.AddRange(recruiterAnswers);
         step.State = state;
+        step.FinalObservations = finalObservations;
         return Result.Ok(step);
     }
 
@@ -55,7 +58,7 @@ public class ConversationStep : Step
             return Result.Fail("Answer cannot be empty");
         }
 
-        if (State != StepState.PendingCandidate || State != StepState.PendingRecruiter)
+        if (State != StepState.PendingCandidate && State != StepState.PendingRecruiter)
         {
             return Result.Fail("Cannot add answer to a step that is not pending candidate or recruiter");
         }
@@ -75,7 +78,9 @@ public class ConversationStep : Step
         {
             Name = Name,
             Description = Description,
+            Title = Title,
             State = State,
+            FinalObservations = FinalObservations,
             Fields = new Dictionary<string, string?>
             {
                 { nameof(Question), Question },

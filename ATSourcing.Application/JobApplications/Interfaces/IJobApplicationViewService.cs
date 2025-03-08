@@ -17,7 +17,7 @@ public interface IJobApplicationViewService : IViewService
 
     Task DeleteJobApplicationInfoViewAsync(Guid jobApplicationId, CancellationToken cancellationToken);
 
-    Task<ViewPagingResult<JobApplicationItemView>> GetJobApplicationsInfo(Guid? candidateId, Guid? jobId,
+    Task<ViewPagingResult<JobApplicationItemView>> GetJobApplicationItems(Guid? candidateId, Guid? jobId,
         ViewPagingParameters pagingParameters,
         CancellationToken cancellationToken);
 

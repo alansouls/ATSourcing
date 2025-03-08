@@ -5,6 +5,7 @@ namespace ATSourcing.Domain.StepDefinitions;
 
 public abstract class StepDefinition
 {
+    public abstract string Title { get; }
     public abstract string Name { get; }
     
     public abstract string Description { get; }

@@ -93,7 +93,7 @@ internal class DomainEventCosmosRepository : IDomainEventRepository
 
         foreach (var @event in events)
         {
-            batch.CreateItem(@event.ToModel());
+            batch.CreateItem(_domainEventModelConverter.ToDomainEventModel(@event));
         }
 
         var response = await batch.ExecuteAsync(cancellationToken);

@@ -1,5 +1,6 @@
 ﻿using ATSourcing.Domain.Jobs.Events;
 using ATSourcing.Domain.Jobs.Snapshots;
+using ATSourcing.Domain.StepDefinitions;
 using ATSourcing.Domain.StepDefinitions.Definitions;
 using ATSourcing.Domain.ValueObjects;
 using ESFrame.Domain;
@@ -83,6 +84,7 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
         ApplicationDeadline = @event.Data.ApplicationDeadline;
         VacancyCount = @event.Data.VacancyCount;
         SalaryRange = @event.Data.SalaryRange;
+        StepFlow = @event.Data.StepFlow;
         _candidates = [];
         return Result.Ok();
     }
@@ -215,5 +217,23 @@ public class Job : BaseAggregateRoot<JobSnapshot, Guid>
     {
         return AddEvent(new JobCandidateApplicationRemovedEvent(Id,
             new JobCandidateApplicationRemovedEventData(candidateId), removedAt));
+    }
+
+    public StepDefinition? GetNextStepDefinition(int currentStepIndex)
+    {
+        int index = 0;
+        var step = StepFlow;
+        while (index <= currentStepIndex) 
+        {
+            if (step is null)
+            {
+                return null;
+            }
+
+            step = step.Next;
+            index++;
+        }
+
+        return step?.Current;
     }
 }

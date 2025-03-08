@@ -1,4 +1,5 @@
 using ATSourcing.Api.Candidates;
+using ATSourcing.Api.JobApplications;
 using ATSourcing.Api.Jobs;
 using ATSourcing.Application.Extensions;
 using ATSourcing.Infrastructure.Extensions;
@@ -31,5 +32,7 @@ app.UseHttpsRedirection();
 app.MapCandidateEndpoints();
 
 app.MapJobEndpoints();
+
+app.MapJobApplicationEndpoints();
 
 app.Run();

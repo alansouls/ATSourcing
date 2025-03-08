@@ -14,6 +14,8 @@ public class ConversationStepDefinition : StepDefinition
 
     public required string Question { get; set; }
 
+    public override string Title => Question;
+
     public override Step CreateStep()
     {
         return ConversationStep.Create(Question).Value;

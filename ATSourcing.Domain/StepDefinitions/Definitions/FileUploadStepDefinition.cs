@@ -15,6 +15,8 @@ public class FileUploadStepDefinition : StepDefinition
 
     public required List<string> RequiredFiles { get; set; }
 
+    public override string Title => $"Upload the following files {string.Join(", ", RequiredFiles)}";
+
     public override Step CreateStep()
     {
         return FileUploadStep.Create(RequiredFiles).Value;

@@ -1,0 +1,77 @@
+﻿@inherits LayoutComponentBase
+@rendermode InteractiveAuto
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Color="Color.Transparent" Elevation="0">
+        <MudGrid Justify="Justify.SpaceBetween">
+            <MudItem xs="6">
+                <MudText Typo="Typo.h5">
+                    Page Title
+                </MudText>
+            </MudItem>
+            <MudItem xs="6" Class="d-flex flex-row-reverse gap-2">
+                <MudMenu >
+                    <ActivatorContent>
+                        <MudAvatar Color="Color.Primary" Size="Size.Small" Elevation="0">AM</MudAvatar>
+                    </ActivatorContent>
+                </MudMenu>
+                <MudIconButton  Size="Size.Small" Icon="@Icons.Material.Outlined.Help" />
+                <MudIconButton  Size="Size.Small" Icon="@Icons.Material.Outlined.Notifications" />
+            </MudItem>
+        </MudGrid>
+    </MudAppBar>
+    <MudDrawer Color="Color.Surface" Open="true">
+        <MudGrid Class="py-4">
+            <MudItem xs="12" Class="d-flex flex-row justify-center">
+                <MudText Typo="Typo.h6">ATSourcing</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudNavMenu Bordered="false">
+                    <MudNavGroup HideExpandIcon="true" Ripple="false">
+                        <TitleContent>
+                            <MudText Typo="Typo.caption">Candidates</MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudNavLink Href="#">
+                                My Applications
+                            </MudNavLink>
+                            <MudNavLink Href="#">
+                                Job Offers
+                            </MudNavLink>
+                            <MudNavLink Href="#">
+                                My Profile
+                            </MudNavLink>
+                        </ChildContent>
+                    </MudNavGroup>
+                    <MudNavGroup HideExpandIcon="true" Ripple="false">
+                        <TitleContent>
+                            <MudText Typo="Typo.caption">Recruiters</MudText>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudNavLink Href="#">
+                                Ongoing Applications
+                            </MudNavLink>
+                            <MudNavLink Href="#">
+                                Job Offers
+                            </MudNavLink>
+                        </ChildContent>
+                    </MudNavGroup>
+                </MudNavMenu>
+            </MudItem>
+        </MudGrid>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

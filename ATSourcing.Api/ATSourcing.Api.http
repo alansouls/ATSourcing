@@ -140,6 +140,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
+  "finalObservations": "budget was approved!"
 }
 
 ###

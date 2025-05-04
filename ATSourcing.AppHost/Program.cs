@@ -38,4 +38,6 @@ var api = builder.AddProject<ATSourcing_Api>("api")
     .WithReference(cosmos)
     .WaitFor(dbConfigurer);
 
+builder.AddProject<Projects.ATSourcing_WebApp>("atsourcing-webapp");
+
 builder.Build().Run();

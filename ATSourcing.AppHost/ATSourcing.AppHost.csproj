@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ATSourcing.Api\ATSourcing.Api.csproj" />
     <ProjectReference Include="..\ATSourcing.CosmosDBConfigurer\ATSourcing.CosmosDBConfigurer.csproj" />
+    <ProjectReference Include="..\ATSourcing.WebApp\ATSourcing.WebApp\ATSourcing.WebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
